@@ -6,6 +6,10 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.SpringLayout;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
 public class GUIPanel extends JPanel
 {
 	private GUIAppController appController;
@@ -18,8 +22,11 @@ public class GUIPanel extends JPanel
 		this.appController = appController;
 		firstButton = new JButton("Click on the button");
 		appLayout = new SpringLayout();
-		
+
+				
 		setupPanel();
+		setupLayout();
+		setupListeners();
 	}
 	
 	/**
@@ -33,13 +40,34 @@ public class GUIPanel extends JPanel
 		this.setLayout(appLayout);
 	}
 	
+	/**
+	 * used to hold the constraint positioning for SpringLayout
+	 * AKA a giant dumping ground for all the xxxx.putConstraint(....) lines.
+	 */
 	private void setupLayout()
 	{
-		
+		appLayout.putConstraint(SpringLayout.NORTH, firstButton, 135, SpringLayout.NORTH, this);
+		appLayout.putConstraint(SpringLayout.WEST, firstButton, 137, SpringLayout.WEST, this);
 	}
 	
 	private void setupListeners()
 	{
+		firstButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				changeScreenColor();
+			}
+		});
+	}
+	
+	private void changeScreenColor()
+	{
+		int red = (int) (Math.random() * 256);
+		int green = (int) (Math.random() * 256);
+		int blue = (int) (Math.random() * 256);
+		
+		this.setBackground(new Color(red, green, blue));
 		
 	}
 }
